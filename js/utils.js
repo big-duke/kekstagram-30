@@ -40,3 +40,54 @@ const extractNumbers = (inputString) => {
   return parseInt(res, 10);
 };
 
+const getZippedArrays = (arrKeys, arrValues) =>
+  arrKeys.reduce((acc, key, index) => {
+    acc[key] = arrValues[index];
+    return acc;
+  }, {});
+
+const getRepeats = (inputArray) =>
+  inputArray.reduce((acc, cur) => {
+    if (cur in acc) {
+      acc[cur] += 1;
+    } else {
+      acc[cur] = 1;
+    }
+    return acc;
+  }, {});
+
+  /* eslint-disable no-console */
+export const getRandomInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+
+  return Math.floor(result);
+};
+
+export const createRandomIdFromRangeGenerator = (min, max) => {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= max - min + 1) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
+
+export const getRandomArrayElement = (elements) =>
+  elements[getRandomInteger(0, elements.length - 1)];
+
+export const createIdGenerator = () => {
+  let last = 0;
+  return () => {
+    last += 1;
+    return last;
+  };
+};
