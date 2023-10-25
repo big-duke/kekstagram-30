@@ -1,3 +1,2 @@
-import { generatePictures } from './data.js';
-import './function.js'
-console.log(generatePictures(25));
+import { renderThumbnails } from './thumbnails.js';
+renderThumbnails();
