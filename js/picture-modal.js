@@ -6,12 +6,19 @@ const descriptionElement = document.querySelector('.social__caption');
 const likesCountElement = document.querySelector('.likes-count');
 
 const commentsContainer = document.querySelector('.social__comments');
-const commentsCountContainerElement = document.querySelector('.social__comment-count');
-const commentsShownCountElement = document.querySelector('.social__comment-shown-count');
-const commentsTotalCountElement = document.querySelector('.social__comment-total-count');
-const commentsLoaderButton = document.querySelector('.social__comments-loader');
+
+const commentShownCountElement = document.querySelector(
+  '.social__comment-shown-count'
+);
+const commentTotalCountElement = document.querySelector(
+  '.social__comment-total-count'
+);
+const commentLoaderButton = document.querySelector('.social__comments-loader');
 
 const commentTemplate = document.querySelector('#social__comment').content;
+
+let shownCount = 0;
+let pictureComments = [];
 
 const createComment = ({ avatar, name, message }) => {
   const comment = commentTemplate.cloneNode(true);
@@ -21,40 +28,52 @@ const createComment = ({ avatar, name, message }) => {
   return comment;
 };
 
-const renderComments = (comments) => {
-
+const renderComments = () => {
+  shownCount += 5;
+  if (shownCount >= pictureComments.length) {
+    commentLoaderButton.classList.add('hidden');
+    shownCount = pictureComments.length;
+  } else {
+    commentLoaderButton.classList.remove('hidden');
+  }
   commentsContainer.innerHTML = '';
   const fragment = document.createDocumentFragment();
-  comments.forEach((item) => {
+  pictureComments.slice(0, shownCount).forEach((item) => {
     const comment = createComment(item);
     fragment.append(comment);
   });
   commentsContainer.append(fragment);
-
+  commentShownCountElement.textContent = shownCount;
 };
+
+const renderCommentsHandler = (e) => {
+  e.preventDefault();
+  renderComments();
+};
+
 export const showModal = ({ url, description, likes, comments }) => {
   pictureModal.classList.remove('hidden');
   bodyElelement.classList.add('modal-open');
-  commentsCountContainerElement.classList.add('hidden');
-  commentsLoaderButton.classList.add('hidden');
 
   pictureElement.src = url;
   pictureElement.alt = description;
   likesCountElement.textContent = likes;
-  commentsTotalCountElement.textContent = comments.length;
-  commentsShownCountElement.textContent = 5;
+  commentTotalCountElement.textContent = comments.length;
+  commentShownCountElement.textContent = shownCount;
   descriptionElement.textContent = description;
-
-
-  renderComments(comments);
+  pictureComments = comments;
+  renderComments();
 
   document.addEventListener('keydown', handleDocumentKeyDown);
+  commentLoaderButton.addEventListener('click',renderCommentsHandler);
 };
 
 const hideModal = () => {
   pictureModal.classList.add('hidden');
   bodyElelement.classList.remove('modal-open');
   document.removeEventListener('keydown', handleDocumentKeyDown);
+  commentLoaderButton.removeEventListener('click',renderCommentsHandler);
+  shownCount = 0;
 };
 
 function handleDocumentKeyDown(e) {
