@@ -719,6 +719,9 @@ main {
   position: relative;
 }
 
+.has-danger{
+  color:red;
+}
 
 /**
  * Кнопка для отправки изображения

@@ -1,4 +1,4 @@
-import { showModal } from './picture-modal.js';
+import { showModal } from './modal.js';
 
 const previewTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const renderPreview = (picture) => {
@@ -21,7 +21,7 @@ const renderPreview = (picture) => {
 const setContainerClickHandler = (container,pictures) => {
   container.addEventListener('click', (e) => {
     const preview = e.target.closest('[data-id]');
-    const previewId = Number(preview.dataset.previewId);
+    const previewId = Number(preview?.dataset.previewId);
     if (Number.isNaN(previewId)) {
       return;
     }
