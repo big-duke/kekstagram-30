@@ -1,5 +1,7 @@
 import { isEscape } from './utils.js';
 import * as pristine from './pristine.js';
+import { resetZoom } from './zoom.js';
+import { resetVisual } from './visual.js';
 
 const bodyElelement = document.body;
 const modalElement = document.querySelector('.img-upload__overlay');
@@ -19,6 +21,8 @@ const showModal = () => {
 const hideModal = () => {
   formModal.reset();
   pristine.reset();
+  resetZoom();
+  resetVisual();
   bodyElelement.classList.remove('modal-open');
   modalElement.classList.add('hidden');
   selectFileBtn.value = '';
