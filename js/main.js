@@ -1,7 +1,14 @@
 import { renderGallery } from './gallery.js';
-import { generatePicturesData } from './data.js';
 import { initForm } from './form.js';
+import { getData } from './api.js';
+import { showFetchError } from './messages.js';
 
-const pictures = generatePicturesData();
-renderGallery(pictures);
+getData()
+  .then((pictures) => {
+    renderGallery(pictures);
+  })
+  .catch(() => {
+    showFetchError();
+  });
+
 initForm();

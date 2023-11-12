@@ -1,6 +1,7 @@
 import { showModal } from './modal.js';
 
 const previewTemplate = document.querySelector('#picture').content.querySelector('.picture');
+
 const renderPreview = (picture) => {
   const preview = previewTemplate.cloneNode(true);
 
@@ -18,15 +19,15 @@ const renderPreview = (picture) => {
   return preview;
 };
 
-const setContainerClickHandler = (container,pictures) => {
+const setContainerClickHandler = (container, pictures) => {
   container.addEventListener('click', (e) => {
-    const preview = e.target.closest('[data-id]');
-    const previewId = Number(preview?.dataset.previewId);
-    if (Number.isNaN(previewId)) {
+    const preview = e.target.closest('a.picture[data-id]');
+    if (!preview) {
       return;
     }
-
     e.preventDefault();
+    const previewId = Number(preview?.dataset.id);
+
     const picture = pictures.find((item) => item.id === previewId);
     showModal(picture);
   });
@@ -37,7 +38,7 @@ export const renderGallery = (pictures) => {
   pictures.forEach((item) => {
     const preview = renderPreview(item);
 
-    preview.addEventListener('click', () => showModal(item));
+    // preview.addEventListener('click', () => showModal(item));
     fragment.append(preview);
   });
 
@@ -45,5 +46,3 @@ export const renderGallery = (pictures) => {
   setContainerClickHandler(container, pictures);
   container.append(fragment);
 };
-
-

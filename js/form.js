@@ -2,6 +2,8 @@ import { isEscape } from './utils.js';
 import * as pristine from './pristine.js';
 import { resetZoom } from './zoom.js';
 import { resetVisual } from './visual.js';
+import { sendData } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './messages.js';
 
 const bodyElelement = document.body;
 const modalElement = document.querySelector('.img-upload__overlay');
@@ -27,10 +29,10 @@ const hideModal = () => {
   modalElement.classList.add('hidden');
   selectFileBtn.value = '';
   document.removeEventListener('keydown', documentKeyDownHandler);
-  };
+};
 
 function documentKeyDownHandler(e) {
-  if (isEscape(e)) {
+  if (isEscape(e) && !document.querySelector('section.error')) {
     e.preventDefault();
     hideModal();
   }
@@ -46,6 +48,18 @@ const submitFormHandler = (e) => {
 
   const isValid = pristine.validate();
 
+  if (isValid) {
+    uploadBtn.disabled = true;
+    const formData = new FormData(formModal);
+
+    sendData(formData).then(() => {
+      hideModal();
+      showSuccessMessage();
+    }).catch(() => showErrorMessage()).finally(() => {
+      uploadBtn.disabled = false;
+    });
+
+  }
 };
 
 export const initForm = () => {
@@ -56,3 +70,4 @@ export const initForm = () => {
   hashtagsElement.addEventListener('keydown', pressEscHandler);
   commentElement.addEventListener('keydown', pressEscHandler);
 };
+
