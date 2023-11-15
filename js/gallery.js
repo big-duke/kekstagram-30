@@ -1,7 +1,7 @@
 import { showModal } from './modal.js';
 
 const previewTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
+const galleryContainer = document.querySelector('.pictures');
 const renderPreview = (picture) => {
   const preview = previewTemplate.cloneNode(true);
 
@@ -33,8 +33,14 @@ const setContainerClickHandler = (container, pictures) => {
   });
 };
 
+const emptyGallery = () => {
+  galleryContainer.querySelectorAll('a.picture').forEach((elem) => elem.remove());
+};
+
 export const renderGallery = (pictures) => {
+  console.log('renderGallery');
   const fragment = document.createDocumentFragment();
+  emptyGallery();
   pictures.forEach((item) => {
     const preview = renderPreview(item);
 
@@ -42,7 +48,7 @@ export const renderGallery = (pictures) => {
     fragment.append(preview);
   });
 
-  const container = document.querySelector('.pictures');
-  setContainerClickHandler(container, pictures);
-  container.append(fragment);
+
+  setContainerClickHandler(galleryContainer, pictures);
+  galleryContainer.append(fragment);
 };

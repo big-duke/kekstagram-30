@@ -45,3 +45,4 @@ export const resetVisual = () => {
   preview.style.filter = '';
   sliderContainerElement.style.display = 'none';
 };
+

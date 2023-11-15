@@ -52,3 +52,10 @@ export const SLIDER_DEFAULT_CONFIG = {
   step: 1,
   connect: 'lower',
 };
+
+
+export const Filter = {
+  DEFAULT: 'filter-default',
+  RANDOM: 'filter-random',
+  DISCUSSED: 'filter-discussed',
+};
