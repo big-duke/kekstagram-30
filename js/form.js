@@ -5,6 +5,9 @@ import { resetVisual } from './visual.js';
 import { sendData } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './messages.js';
 
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
+
 const bodyElelement = document.body;
 const modalElement = document.querySelector('.img-upload__overlay');
 const formModal = document.querySelector('.img-upload__form');
@@ -13,6 +16,8 @@ const selectFileBtn = document.querySelector('.img-upload__input');
 const hashtagsElement = document.querySelector('.text__hashtags');
 const commentElement = document.querySelector('.text__description');
 const uploadBtn = document.querySelector('#upload-submit');
+const fileChooser = document.querySelector('input[type=file]');
+const preview = document.querySelector('.img-upload__preview > img');
 
 const showModal = () => {
   bodyElelement.classList.add('modal-open');
@@ -30,6 +35,18 @@ const hideModal = () => {
   selectFileBtn.value = '';
   document.removeEventListener('keydown', documentKeyDownHandler);
 };
+
+fileChooser.addEventListener('change', () => {
+
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const fileType = fileName.split('.').pop();
+  const matches = FILE_TYPES.includes(fileType);
+
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+});
 
 function documentKeyDownHandler(e) {
   if (isEscape(e) && !document.querySelector('section.error')) {
