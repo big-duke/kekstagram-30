@@ -1,4 +1,5 @@
 import { showModal } from './modal.js';
+let pictures = [];
 
 const previewTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const galleryContainer = document.querySelector('.pictures');
@@ -19,36 +20,36 @@ const renderPreview = (picture) => {
   return preview;
 };
 
-const setContainerClickHandler = (container, pictures) => {
-  container.addEventListener('click', (e) => {
-    const preview = e.target.closest('a.picture[data-id]');
-    if (!preview) {
-      return;
-    }
-    e.preventDefault();
-    const previewId = Number(preview?.dataset.id);
+const onGalleryClick = (e) => {
+  const preview = e.target.closest('a.picture[data-id]');
+  if (!preview) {
+    return;
+  }
+  e.preventDefault();
+  const previewId = Number(preview?.dataset.id);
 
-    const picture = pictures.find((item) => item.id === previewId);
-    showModal(picture);
-  });
+  const picture = pictures.find((item) => item.id === previewId);
+  showModal(picture);
 };
+
 
 const emptyGallery = () => {
   galleryContainer.querySelectorAll('a.picture').forEach((elem) => elem.remove());
 };
 
-export const renderGallery = (pictures) => {
-  console.log('renderGallery');
+export const renderGallery = (currentPictures) => {
   const fragment = document.createDocumentFragment();
+  pictures = currentPictures;
   emptyGallery();
-  pictures.forEach((item) => {
+  currentPictures.forEach((item) => {
     const preview = renderPreview(item);
 
     // preview.addEventListener('click', () => showModal(item));
     fragment.append(preview);
   });
 
+  galleryContainer.removeEventListener('click',onGalleryClick);
+  galleryContainer.addEventListener('click',onGalleryClick);
 
-  setContainerClickHandler(galleryContainer, pictures);
   galleryContainer.append(fragment);
 };

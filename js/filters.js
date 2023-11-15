@@ -4,10 +4,10 @@ import { debounce } from './utils';
 const RANDOM_PICTURE_LIMIT = 10;
 const RENDER_DELAY_MS = 500;
 
-let filter = Filter .DEFAULT;
+let filter = Filter.DEFAULT;
 let pictures = [];
 
-const debounceRenderGallery = debounce(renderGallery,RENDER_DELAY_MS)
+const debounceRenderGallery = debounce(renderGallery,RENDER_DELAY_MS);
 
 const filterElement = document.querySelector('.img-filters');
 const getFilterPictures = () => {

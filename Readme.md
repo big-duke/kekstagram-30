@@ -1,6 +1,6 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Виктория Никитина](https://up.htmlacademy.ru/javascript/30/user/240455).
+* 
 * Наставник: [Алексей Козлов](https://htmlacademy.ru/profile/id1479859).
 
 ---

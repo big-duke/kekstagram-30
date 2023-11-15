@@ -17,7 +17,7 @@ const applyFilter = (value = undefined) => {
 };
 
 const sliderUpdateHandler = () => {
-  const sliderValue = slider.get();
+  const sliderValue = slider.get(true);
   effectValueElement.value = sliderValue;
   applyFilter(sliderValue);
 };

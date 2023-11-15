@@ -18,6 +18,7 @@ const commentElement = document.querySelector('.text__description');
 const uploadBtn = document.querySelector('#upload-submit');
 const fileChooser = document.querySelector('input[type=file]');
 const preview = document.querySelector('.img-upload__preview > img');
+const effectsPreview = document.querySelectorAll('.effects__preview');
 
 const showModal = () => {
   bodyElelement.classList.add('modal-open');
@@ -44,7 +45,11 @@ fileChooser.addEventListener('change', () => {
   const matches = FILE_TYPES.includes(fileType);
 
   if (matches) {
-    preview.src = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    preview.src = url;
+    effectsPreview.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url('${url}')`;
+    });
   }
 });
 

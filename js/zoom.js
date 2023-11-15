@@ -4,12 +4,11 @@ const zoomValueElement = document.querySelector('.scale__control--value');
 const zoomIncrementBtn = document.querySelector('.scale__control--bigger');
 const zoomDecrementBtn = document.querySelector('.scale__control--smaller');
 
-const preview = document.querySelector('.img-upload__preview');
+const preview = document.querySelector('.img-upload__preview > img');
 
 const ZOOM_MIN = 0.25;
 const ZOOM_MAX = 1;
 const ZOOM_STEP = 0.25;
-
 
 
 const handleZoomChange = (step) => {
@@ -20,7 +19,7 @@ const handleZoomChange = (step) => {
   if (step > 0 && zoom < ZOOM_MAX) {
     zoom += step;
   }
-  zoomValueElement.value = zoom.toLocaleString(undefined, { style: 'percent' });
+  zoomValueElement.value = `${zoom * 100}%`;
   preview.style.transform = `scale(${zoom})`;
 };
 

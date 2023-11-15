@@ -26,9 +26,10 @@ const showMessage = (messageConfig) => {
 };
 
 function bodyClickHandler (e) {
-  if (e.target.closest('.success') || e.target.closest('.error')) {
-    hideMessage();
+  if (e.target.closest('.success__inner') || e.target.closest('.error__inner')) {
+    return;
   }
+  hideMessage();
 }
 
 function documentKeyDownHandler(e) {
